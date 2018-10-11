@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "Header.h"
+#include <random>
 using namespace std;
 
 int firstPlayer() {
@@ -21,4 +22,16 @@ int computerChoice() {
 	srand(time(NULL));
 	int randomChoice = rand() % 7 + 1;
 	return randomChoice;
+}
+
+int random() {
+	int randomNum;
+	std::default_random_engine generator;
+	generator.seed(randomNum);
+	std::uniform_int_distribution<int> distribution(0, 9);//note the min and max parameters are inclusive here
+	while (true)
+	{
+		cout << distribution(generator) << endl;
+	}
+	cout<< 
 }
