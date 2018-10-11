@@ -6,5 +6,7 @@ int drawCard();
 int computerChoice();
 void setColor(char color);
 void displayHand(int player);
+void distributeCards();
+int playerCards[][7];
 
 #endif
