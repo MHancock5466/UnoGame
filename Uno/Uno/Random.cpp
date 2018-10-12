@@ -25,6 +25,7 @@ int computerChoice() {
 }
 
 int random() {
+
 	int randomNum = 0;
 	default_random_engine generator;
 	generator.seed(randomNum);
