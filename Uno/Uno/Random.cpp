@@ -25,13 +25,9 @@ int computerChoice() {
 }
 
 int random() {
-	int randomNum;
-	std::default_random_engine generator;
+	int randomNum= 0;
+	default_random_engine generator;
 	generator.seed(randomNum);
-	std::uniform_int_distribution<int> distribution(0, 9);//note the min and max parameters are inclusive here
-	while (true)
-	{
-		cout << distribution(generator) << endl;
-	}
-	cout<< 
+	uniform_int_distribution<int> distribution(1, 108);//note the min and max parameters are inclusive here
+	return distribution(generator);
 }
