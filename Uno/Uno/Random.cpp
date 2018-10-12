@@ -25,7 +25,8 @@ int computerChoice() {
 }
 
 int random() {
-	int randomNum= 0;
+
+	int randomNum = 0;
 	default_random_engine generator;
 	generator.seed(randomNum);
 	uniform_int_distribution<int> distribution(1, 108);//note the min and max parameters are inclusive here
