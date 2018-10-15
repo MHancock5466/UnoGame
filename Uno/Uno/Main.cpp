@@ -1,6 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <random>
 #include "Header.h"
 using namespace std;
 using namespace std::chrono;
@@ -13,14 +14,17 @@ int main() {
 	int cardsLeft = 1;
 	
 	do {
-		firstPlayer();
+		for (int i = 0; i < 20; i++)
+			cout << random();
+		
+		/*firstPlayer();
 		distributeCards();
 		for (int currentPlayer = firstPlayer(); currentPlayer <= 4; currentPlayer++) {
 			if (currentPlayer == 1)
 				displayHand(currentPlayer);
 			else if (currentPlayer == 4)
 				currentPlayer = 0;
-		}
+		}*/
 		
 		cout << "Would you like to play again?\n1 - Yes\n2 - No" << endl;
 		cin >> replay;
