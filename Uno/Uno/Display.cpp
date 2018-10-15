@@ -28,6 +28,7 @@ void setColor(char color) {
 
 void displayHand(int player) {
 	cout << "\nYour Hand: " << endl;
-	for (int i = 0; i < 7; i++)
-		cout << playerCards[player][i] << " ";
+	for (int i = 0; i < 7; i++) {
+		cout << playerCards[player][i] << endl;
+	}
 }

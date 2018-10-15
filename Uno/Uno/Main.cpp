@@ -14,18 +14,11 @@ int main() {
 	int cardsLeft = 1;
 	
 	do {
-		for (int i = 0; i < 20; i++)
-			cout << random();
-		
-		/*firstPlayer();
+		firstPlayer();
 		distributeCards();
-		for (int currentPlayer = firstPlayer(); currentPlayer <= 4; currentPlayer++) {
-			if (currentPlayer == 1)
-				displayHand(currentPlayer);
-			else if (currentPlayer == 4)
-				currentPlayer = 0;
-		}*/
-		
+		for (int currentPlayer = firstPlayer(); currentPlayer < 4; currentPlayer++)
+			//displayHand(currentPlayer);
+					
 		cout << "Would you like to play again?\n1 - Yes\n2 - No" << endl;
 		cin >> replay;
 	} while (replay != 2);
