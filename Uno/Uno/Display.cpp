@@ -1,34 +1,32 @@
 #include <iostream>
-#include <chrono>
-#include <thread>
+#include <string>
 #include <Windows.h>
 #include "Header.h"
 using namespace std;
-using namespace std::chrono;
-using namespace std::this_thread;
 
-void setColor(char color) {
-	switch (color) {
-	case 'r':
+void setColor(int color) {
+	if (color >=0 && color < 25)
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); //Red
-		break;
-	case 'g':
+	else if (color >= 25 && color < 50)
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10); //Green
-		break;
-	case 'y':
+	else if (color >= 50 && color < 75)
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14); //Yellow
-		break;
-	case 'b':
+	else if (color >= 75 && color < 100)
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11); //Blue
-		break;
-	default:
+	else
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);  //White
-	}
 }
 
 void displayHand(int player) {
 	cout << "\nYour Hand: " << endl;
 	for (int i = 0; i < 7; i++) {
-		cout << playerCards[player][i] << endl;
+		setColor(playerCardArrayValue[player][i]);
+		cout << playerCardNumber[player][i] << " ";
+		if (i == 6)
+			setColor(-1);
 	}
+}
+
+void displayCurrentCard(){
+	
 }
