@@ -1,34 +1,24 @@
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include "Header.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include <random>
 using namespace std;
 
 int firstPlayer() {
-	srand(time(NULL));
-	int choosePlayer = rand() % 4 + 1;
-	return choosePlayer;
+	default_random_engine gen(random_device{}());
+	uniform_int_distribution<int> dist(0, 3);
+	return dist(gen);
 }
 
 int drawCard() {
-	srand(time(NULL));
-	int randomCard = rand() % 108 + 1;
-	return randomCard;
+	default_random_engine gen(random_device{}());
+	uniform_int_distribution<int> dist(1, 108);
+	return dist(gen);
 }
 
 int computerChoice() {
-	srand(time(NULL));
-	int randomChoice = rand() % 7 + 1;
-	return randomChoice;
-}
-
-int random() {
-
-	int randomNum = 0;
-	default_random_engine generator;
-	generator.seed(randomNum);
-	uniform_int_distribution<int> distribution(1, 108);//note the min and max parameters are inclusive here
-	return distribution(generator);
+	default_random_engine gen(random_device{}());
+	uniform_int_distribution<int> dist(1, 7);
+	return dist(gen);
 }
