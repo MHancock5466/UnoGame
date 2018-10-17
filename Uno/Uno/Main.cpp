@@ -11,16 +11,18 @@ int main() {
 	int cardsLeft = 1;
 	
 	do {
+		for (int i = 0; i < 108; i++)
+			playedCards[i] = 0;
 		firstPlayer();
 		distributeCards();
+		firstCard();
 		for (int currentPlayer = firstPlayer(); currentPlayer < 4; currentPlayer++) {
 			if (currentPlayer == 3) {
+				currentCard();
 				displayHand(currentPlayer);
 				chooseACard();
-				currentPlayer = 0;
 			}
 		}
-					
 		cout << "Would you like to play again?\n1 - Yes\n2 - No" << endl;
 		cin >> replay;
 	} while (replay != 2);

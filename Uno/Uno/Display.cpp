@@ -26,7 +26,3 @@ void displayHand(int player) {
 			setColor(-1);
 	}
 }
-
-void displayCurrentCard(){
-	
-}
