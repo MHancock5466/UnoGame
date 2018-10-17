@@ -1,7 +1,5 @@
 #include <iostream>
 #include "Header.h"
-#include <stdlib.h>
-#include <stdio.h>
 #include <random>
 using namespace std;
 
