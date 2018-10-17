@@ -4,10 +4,12 @@
 int firstPlayer();
 int drawCard();
 int computerChoice();
-void setColor(char color);
+void setColor(int color);
 void displayHand(int player);
 void distributeCards();
+void displayCurrentCard();
+void chooseACard();
 
-int playerCards[][7];
-int cardTest;
+std::string playerCardNumber[][7];
+int playerCardArrayValue[][7];
 #endif
