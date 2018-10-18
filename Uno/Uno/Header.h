@@ -1,15 +1,21 @@
+#include <string>
+using namespace std;
 #ifndef Uno
 #define Uno
-
+//Random Class
 int firstPlayer();
 int drawCard();
 int computerChoice();
+//Display Class
 void setColor(int color);
 void displayHand(int player);
+//Card Counter Class
 void distributeCards();
-void displayCurrentCard();
+void firstCard();
+void currentCard();
 void chooseACard();
-
-std::string playerCardNumber[][7];
+//Public Variables for Use
+string playerCardNumber[][7];
 int playerCardArrayValue[][7];
+int playedCards[];
 #endif

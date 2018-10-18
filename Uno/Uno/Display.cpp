@@ -18,15 +18,13 @@ void setColor(int color) {
 }
 
 void displayHand(int player) {
+	setColor(-1);
 	cout << "\nYour Hand: " << endl;
+	//Loop for all seven cards in player hands
 	for (int i = 0; i < 7; i++) {
 		setColor(playerCardArrayValue[player][i]);
 		cout << playerCardNumber[player][i] << " ";
 		if (i == 6)
 			setColor(-1);
 	}
-}
-
-void displayCurrentCard(){
-	
 }
