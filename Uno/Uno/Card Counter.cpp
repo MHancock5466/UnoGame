@@ -10,10 +10,9 @@ string card[108] = {
 	"0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6", "7", "7", "8", "8", "9", "9", "S", "S", "R", "R", "+2", "+2",
 	"0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6", "7", "7", "8", "8", "9", "9", "S", "S", "R", "R", "+2", "+2",
 	"+4", "+4", "+4", "+4", "W", "W", "W", "W" };
-int currentCardChoice;
-int cardDrawn;
-string currentCardVar;
-string lastPlayedCard;
+int cardDrawnArrayValue;
+string currentCardString;
+string lastPlayedCardString;
 
 void distributeCards() {
 	//Loops distribute cards for 4 players, 7 cards each
@@ -31,31 +30,44 @@ void distributeCards() {
 }
 
 void firstCard() {
-	cardDrawn = drawCard();
-	currentCardVar = card[cardDrawn];
-	playedCards[cardDrawn] = 1;
-	lastPlayedCard = currentCardVar;
-	setColor(cardDrawn);
+	cardDrawnArrayValue = drawCard();
+	currentCardString = card[cardDrawnArrayValue];
+	playedCards[cardDrawnArrayValue] = 1;
+	lastPlayedCardString = currentCardString;
+	setColor(cardDrawnArrayValue);
 }
 
 void currentCard() {
+	setColor(-1);
 	cout << "Current Card: ";
-	setColor();
-	cout << lastPlayedCard << endl;
+	setColor(cardDrawnArrayValue);
+	cout << lastPlayedCardString << endl;
 }
 
-void chooseACard() {	
+bool cardIsPlayable(int arrayValue) {
+	if ((playerCardNumber[3][arrayValue - 1] == lastPlayedCardString)) //|| ((cardDrawnArrayValue < 25 && cardDrawnArrayValue >= 0)	&& ))
+		return true;
+	else
+		return false;
+}
+
+int chooseACard() {	
 	cout << "\nChoose a card\nYour Choice: ";
-	cin >> currentCardChoice;
+	cin >> cardDrawnArrayValue;
 	do {
-		if (playerCardNumber[3][currentCardChoice - 1] == lastPlayedCard) {
+		if (cardIsPlayable(cardDrawnArrayValue)) {
 			cout << "Accepted" << endl;
-			currentCardVar = card[playerCardArrayValue[3][currentCardChoice]];
-			lastPlayedCard = currentCardVar;
+			currentCardString = card[playerCardArrayValue[3][cardDrawnArrayValue - 1]];
+
+			lastPlayedCardString = currentCardString;
+			playerCardNumber[3][cardDrawnArrayValue - 1] = -1;
+			return 0;
 		}
 		else {
 			cout << "Invalid" << endl;
-			cin >> currentCardChoice;
+			cin >> cardDrawnArrayValue;
+			return 0;
 		}
-	} while (true);
+	} while (playerCardNumber[3][cardDrawnArrayValue - 1] != lastPlayedCardString);
 }
+
