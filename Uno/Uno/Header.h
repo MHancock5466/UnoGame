@@ -13,7 +13,7 @@ void displayHand(int player);
 void distributeCards();
 void firstCard();
 void currentCard();
-void chooseACard();
+int chooseACard();
 //Public Variables for Use
 string playerCardNumber[][7];
 int playerCardArrayValue[][7];

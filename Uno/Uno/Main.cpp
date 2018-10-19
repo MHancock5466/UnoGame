@@ -3,13 +3,13 @@
 #include "Header.h"
 using namespace std;
 
-string playerCardNumber[4][7];
 int playerCardArrayValue[4][7];
+string playerCardNumber[4][7];
 
 int main() {
 	int replay = 0;
-	int cardsLeft = 1;
-	
+	int cardsLeft = 7;
+
 	do {
 		//Set All Cards as Playable
 		for (int i = 0; i < 108; i++)
@@ -25,6 +25,8 @@ int main() {
 				currentCard();
 				displayHand(currentPlayer);
 				chooseACard();
+				if(cardsLeft > 1)
+					currentPlayer = 0;
 			}
 			else {
 				//computerGuess();
