@@ -5,17 +5,28 @@ using namespace std;
 //Random Class
 int firstPlayer();
 int drawCard();
-int computerChoice();
 //Display Class
-void setColor(int color);
+void setColor(string color);
 void displayHand(int player);
 //Card Counter Class
 void distributeCards();
 void firstCard();
 void currentCard();
-int chooseACard();
+int chooseACard(int player);
+void computerGuess(int player);
 //Public Variables for Use
-string playerCardNumber[][7];
-int playerCardArrayValue[][7];
-int playedCards[];
+string playerCardNumber[][108];
+int playerCardArrayValue[][108];
+int playedDeckCards[];
+const string card[2][108] = {
+	"0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6", "7", "7", "8", "8", "9", "9", "S", "S", "R", "R", "+2", "+2",
+	"0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6", "7", "7", "8", "8", "9", "9", "S", "S", "R", "R", "+2", "+2",
+	"0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6", "7", "7", "8", "8", "9", "9", "S", "S", "R", "R", "+2", "+2",
+	"0", "1", "1", "2", "2", "3", "3", "4", "4", "5", "5", "6", "6", "7", "7", "8", "8", "9", "9", "S", "S", "R", "R", "+2", "+2",
+	"+4", "+4", "+4", "+4", "W", "W", "W", "W",
+	"d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d", "d",
+	"g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g", "g",
+	"y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y", "y",
+	"b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b",
+	"c", "c", "c", "c", "c", "c", "c", "c" };
 #endif
