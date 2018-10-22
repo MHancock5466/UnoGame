@@ -18,6 +18,7 @@ void setColor(string color) {
 }
 
 void displayHand(int player) {
+	int total = 0;
 	setColor("w");
 	cout << "\nYour Hand: " << endl;
 	//Loop for all cards in player hands
@@ -31,4 +32,12 @@ void displayHand(int player) {
 			cout << playerCardNumber[player][i] << " ";
 		}
 	}
+}
+
+void displayCardCount(int player) {
+	int total = 0;
+	for (int i = 0; i < 108; i++)
+		if (playerCardNumber[player][i] == "0" || playerCardNumber[player][i] == "1" || playerCardNumber[player][i] == "2" || playerCardNumber[player][i] == "3" || playerCardNumber[player][i] == "4" || playerCardNumber[player][i] == "5"|| playerCardNumber[player][i] == "6"|| playerCardNumber[player][i] == "7" || playerCardNumber[player][i] == "8" || playerCardNumber[player][i] == "9" || playerCardNumber[player][i] == "S" || playerCardNumber[player][i] == "R" || playerCardNumber[player][i] == "+2" || playerCardNumber[player][i] == "+4" || playerCardNumber[player][i] == "W")
+			total += 1;
+	cout << "Player " << player + 1 << " has " << total << " cards left." << endl;
 }

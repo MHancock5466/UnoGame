@@ -5,6 +5,7 @@ using namespace std;
 
 int playedDeckCards[108] = { 0 };
 int cardsInHand[4][108] = { 7 };
+int cardsDrawn[4] = { 0 };
 int cardDrawn;
 int colorChoice;
 string currentCardString;
@@ -46,6 +47,48 @@ void currentCard() {
 	setColor("w");
 }
 
+void drawCards(int player, string lastCard) {
+	int cardsToDraw;
+	int actualPlayer = 0;
+	if (reversed == 1) {
+		if (player < 3)
+			actualPlayer = player + 1;
+		else
+			actualPlayer = 0;
+	}
+	else {
+		if (player > 0)
+			actualPlayer = player - 1;
+		else
+			actualPlayer = 3;
+	}
+
+	if (lastCard == "+4") {
+		cardsToDraw = 4;
+	}
+	else if (lastCard == "+2") {
+		cardsToDraw = 2;
+	}
+	else {
+		cardsToDraw = 1;
+	}
+	do {
+		do {
+			playerCardArrayValue[actualPlayer][7 + cardsDrawn[actualPlayer]] = drawCard();
+		} while (playedDeckCards[playerCardArrayValue[actualPlayer][7 + cardsDrawn[actualPlayer]]] == 1);
+		playedDeckCards[playerCardArrayValue[actualPlayer][7 + cardsDrawn[actualPlayer]]] = 1;
+		playerCardNumber[actualPlayer][7 + cardsDrawn[actualPlayer]] = card[0][playerCardArrayValue[actualPlayer][7 + cardsDrawn[actualPlayer]]];
+		cardsDrawn[actualPlayer]++;
+	} while (cardsToDraw > cardsDrawn[actualPlayer]);
+}
+
+void reverseGame() {
+	if (reversed == 1)
+		reversed = -1;
+	else if (reversed == -1)
+		reversed = 1;
+}
+
 bool cardIsPlayable(int player, int arrayValue) {
 	if (playerCardNumber[player][arrayValue] == lastPlayedCardString || card[1][playerCardArrayValue[player][arrayValue]] == lastPlayedCardColor || playerCardNumber[player][arrayValue] == "+4" || playerCardNumber[player][arrayValue] == "W")
 		return true;
@@ -53,8 +96,52 @@ bool cardIsPlayable(int player, int arrayValue) {
 		return false;
 }
 
-void drawACard(int player) {
-	cout << endl;
+void isCardSpecial(string cardString, int player) {
+	int playerAffected = 0;
+	if (reversed == 1) {
+		if (player < 3)
+			playerAffected += player;
+		else
+			playerAffected = 0;
+	}
+	else {
+		if (player < 3)
+			playerAffected -= player;
+		else
+			playerAffected = 3;
+	}
+	if (lastPlayedCardString == "+4" || lastPlayedCardString == "W") {
+		if (player == 3) {
+			cout << "\nChoose a color:\n1 - Red\n2 - Green\n3 - Yellow\n4 - Blue\nYour Choice: ";
+			cin >> colorChoice;
+			if (colorChoice == 1)
+				lastPlayedCardColor = "d";
+			else if (colorChoice == 2)
+				lastPlayedCardColor = "g";
+			else if (colorChoice == 3)
+				lastPlayedCardColor = "y";
+			else
+				lastPlayedCardColor = "b";
+		}
+		else {
+			colorChoice = firstPlayer() + 1;
+			if (colorChoice == 1)
+				lastPlayedCardColor = "d";
+			else if (colorChoice == 2)
+				lastPlayedCardColor = "g";
+			else if (colorChoice == 3)
+				lastPlayedCardColor = "y";
+			else
+				lastPlayedCardColor = "b";
+		}
+		if(lastPlayedCardString == "+4")
+			drawCards(playerAffected, lastPlayedCardString);
+	}
+	else if (lastPlayedCardString == "R")
+		reverseGame();
+	else if (lastPlayedCardString == "S") {
+		skip = 1;
+	}
 }
 
 void computerGuess(int player) {
@@ -70,24 +157,14 @@ void computerGuess(int player) {
 				cout << "Player " << player + 1 << " played ";
 				setColor(lastPlayedCardColor);
 				cout << lastPlayedCardString << endl;
-				if (lastPlayedCardString == "+4" || lastPlayedCardString == "W") {
-					colorChoice = firstPlayer() + 1;
-					if (colorChoice == 1)
-						lastPlayedCardColor = "d";
-					else if (colorChoice == 2)
-						lastPlayedCardColor = "g";
-					else if (colorChoice == 3)
-						lastPlayedCardColor = "y";
-					else
-						lastPlayedCardColor = "b";
-				}
+				isCardSpecial(lastPlayedCardString, player);
 				i = 110;
 			}
 		}
 		else if (i == 107) {
 			setColor("w");
 			cout << "Player " << player + 1 << " drew a card." << endl;
-			drawACard(player);
+			drawCards(player - 1, "+1");
 		}
 	}
 }
@@ -98,7 +175,7 @@ int chooseACard(int player) {
 	cin >> cardDrawn;
 	do {
 		if (cardDrawn == 0) {
-			drawACard(player);
+			drawCards(player - 1, lastPlayedCardString);
 			return 0;
 		}
 		else if (playerCardNumber[3][cardDrawn - 1] == "-") {
@@ -108,18 +185,7 @@ int chooseACard(int player) {
 		else if (cardIsPlayable(3, cardDrawn - 1)) {
 			lastPlayedCardString = card[0][playerCardArrayValue[3][cardDrawn - 1]];
 			lastPlayedCardColor = card[1][playerCardArrayValue[3][cardDrawn - 1]];
-			if (lastPlayedCardString == "+4" || lastPlayedCardString == "W") {
-				cout << "\nChoose a color:\n1 - Red\n2 - Green\n3 - Yellow\n4 - Blue\nYourChoice: ";
-				cin >> colorChoice;
-				if (colorChoice == 1)
-					lastPlayedCardColor = "d";
-				else if (colorChoice == 2)
-					lastPlayedCardColor = "g";
-				else if (colorChoice == 3)
-					lastPlayedCardColor = "y";
-				else
-					lastPlayedCardColor = "b";
-			}
+			isCardSpecial(lastPlayedCardString, player);
 			colorChoice = 0;
 			playerCardNumber[3][cardDrawn - 1] = "-";
 			return 0;
