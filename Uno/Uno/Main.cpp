@@ -1,35 +1,96 @@
 #include <iostream>
 #include <string>
+#include <chrono>
+#include <thread>
 #include "Header.h"
 using namespace std;
+using namespace std::chrono;
+using namespace std::this_thread;
 
-int playerCardArrayValue[4][7];
-string playerCardNumber[4][7];
+int skip;
+int reversed;
+int playerCardArrayValue[4][108];
+string playerCardNumber[4][108];
 
 int main() {
 	int replay = 0;
-	int cardsLeft = 7;
+	int total;
+	skip = 0;
+	reversed = 1;
 
 	do {
 		//Set All Cards as Playable
 		for (int i = 0; i < 108; i++)
-			playedCards[i] = 0;
+			playedDeckCards[i] = 0;
+
 		//Randomize first player, choose a first card, and distribute the rest
-		firstPlayer();
+		int firstPlayerInt = firstPlayer();
 		firstCard();
 		distributeCards();
-		//Loop for all players to repeat
-		for (int currentPlayer = firstPlayer(); currentPlayer < 4; currentPlayer++) {
+		setColor("w");
+		cout << "You are player 4." << endl;
+		cout << "The random first player is player " << firstPlayerInt + 1 << endl;
+		sleep_for(seconds(2));
+
+		//Loop for all players to repeat their turns
+		for (int currentPlayer = firstPlayerInt; currentPlayer < 4; currentPlayer += reversed) {
+			setColor("w");
+			cout << "\n\n\nIt is player " << currentPlayer + 1 << "'s turn. " << endl;
+			displayCardCount(currentPlayer);
+			currentCard();
 			if (currentPlayer == 3) {
 				//Display current card, hand, then let user choose a card
-				currentCard();
 				displayHand(currentPlayer);
-				chooseACard();
-				if(cardsLeft > 1)
-					currentPlayer = 0;
+				chooseACard(currentPlayer);
+				if (reversed == 1)
+					currentPlayer = -1;
 			}
 			else {
-				//computerGuess();
+				//Computer plays possible card, elsewise they draw
+				computerGuess(currentPlayer);
+				sleep_for(seconds(3));
+				if (reversed == -1 && currentPlayer == 0)
+					currentPlayer = 4;
+			}
+			//Check for skip action, ensure reversed allows skip still
+			if (skip == 1) {
+				if (reversed == 1) {
+					if (currentPlayer == 0)
+						currentPlayer = 1;
+					else if (currentPlayer == 1)
+						currentPlayer = 2;
+					else if (currentPlayer == 2)
+						currentPlayer = -1;
+					else
+						currentPlayer = 0;
+				}
+				else {
+					if (skip == 1)
+						if (currentPlayer == 0)
+							currentPlayer = 3;
+						else if (currentPlayer == 1)
+							currentPlayer = 0;
+						else if (currentPlayer == 2)
+							currentPlayer = 1;
+						else
+							currentPlayer = 2;
+				}
+			}
+			skip = 0;
+			//Check for cards remaining
+			total = 0;
+			for (int i = 0; i < 108; i++)
+				if (isCardStandard(currentPlayer, i))
+					total += 1;
+			if (total = 0) {
+				if (currentPlayer != 3) {
+					cout << "Player " << currentPlayer + 1 << " has no cards left. They win." << endl;
+					currentPlayer = 10;
+				}
+				else {
+					cout << "You ran out of cards. You win." << endl;
+					currentPlayer = 10;
+				}
 			}
 		}
 		//Ask for Repeat Gameplay
