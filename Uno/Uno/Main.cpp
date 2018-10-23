@@ -42,16 +42,19 @@ int main() {
 				//Display current card, hand, then let user choose a card
 				displayHand(currentPlayer);
 				chooseACard(currentPlayer);
-				if (reversed == 1)
+				currentPlayer = didPlayerWin(currentPlayer);
+				if (reversed == 1 && currentPlayer == 3)
 					currentPlayer = -1;
 			}
 			else {
 				//Computer plays possible card, elsewise they draw
 				computerGuess(currentPlayer);
+				currentPlayer = didPlayerWin(currentPlayer);
 				sleep_for(seconds(3));
 				if (reversed == -1 && currentPlayer == 0)
 					currentPlayer = 4;
 			}
+			
 			//Check for skip action, ensure reversed allows skip still
 			if (skip == 1) {
 				if (reversed == 1) {
@@ -64,36 +67,22 @@ int main() {
 					else
 						currentPlayer = 0;
 				}
-				else {
-					if (skip == 1)
-						if (currentPlayer == 0)
-							currentPlayer = 3;
-						else if (currentPlayer == 1)
-							currentPlayer = 0;
-						else if (currentPlayer == 2)
-							currentPlayer = 1;
-						else
-							currentPlayer = 2;
+				else if (reversed = -1) {
+					if (currentPlayer == 0)
+						currentPlayer = 4;
+					else if (currentPlayer == 1)
+						currentPlayer = 0;
+					else if (currentPlayer == 2)
+						currentPlayer = 1;
+					else
+						currentPlayer = 2;
 				}
 			}
 			skip = 0;
 			//Check for cards remaining
-			total = 0;
-			for (int i = 0; i < 108; i++)
-				if (isCardStandard(currentPlayer, i))
-					total += 1;
-			if (total = 0) {
-				if (currentPlayer != 3) {
-					cout << "Player " << currentPlayer + 1 << " has no cards left. They win." << endl;
-					currentPlayer = 10;
-				}
-				else {
-					cout << "You ran out of cards. You win." << endl;
-					currentPlayer = 10;
-				}
-			}
 		}
 		//Ask for Repeat Gameplay
+		setColor("w");
 		cout << "Would you like to play again?\n1 - Yes\n2 - No" << endl;
 		cin >> replay;
 	} while (replay != 2);
