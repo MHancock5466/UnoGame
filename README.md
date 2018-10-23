@@ -2,8 +2,8 @@
 
 ## Tabel of Contents
 
-- [Rules](#Rules)
-- 
+- Rules
+- Gameplay
 
 
 
