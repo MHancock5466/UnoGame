@@ -18,6 +18,7 @@ void firstCard();
 void currentCard();
 int chooseACard(int player);
 void computerGuess(int player);
+bool isCardStandard(int player, int i);
 
 //Public Variables for Use
 extern int reversed;

@@ -14,6 +14,7 @@ string playerCardNumber[4][108];
 
 int main() {
 	int replay = 0;
+	int total;
 	skip = 0;
 	reversed = 1;
 
@@ -21,7 +22,6 @@ int main() {
 		//Set All Cards as Playable
 		for (int i = 0; i < 108; i++)
 			playedDeckCards[i] = 0;
-
 
 		//Randomize first player, choose a first card, and distribute the rest
 		int firstPlayerInt = firstPlayer();
@@ -32,9 +32,8 @@ int main() {
 		cout << "The random first player is player " << firstPlayerInt + 1 << endl;
 		sleep_for(seconds(2));
 
-
-		//Loop for all players to repeat
-		for (int currentPlayer = firstPlayerInt; currentPlayer < 4; currentPlayer+=reversed) {
+		//Loop for all players to repeat their turns
+		for (int currentPlayer = firstPlayerInt; currentPlayer < 4; currentPlayer += reversed) {
 			setColor("w");
 			cout << "\n\n\nIt is player " << currentPlayer + 1 << "'s turn. " << endl;
 			displayCardCount(currentPlayer);
@@ -47,11 +46,13 @@ int main() {
 					currentPlayer = -1;
 			}
 			else {
+				//Computer plays possible card, elsewise they draw
 				computerGuess(currentPlayer);
 				sleep_for(seconds(3));
 				if (reversed == -1 && currentPlayer == 0)
 					currentPlayer = 4;
 			}
+			//Check for skip action, ensure reversed allows skip still
 			if (skip == 1) {
 				if (reversed == 1) {
 					if (currentPlayer == 0)
@@ -66,16 +67,31 @@ int main() {
 				else {
 					if (skip == 1)
 						if (currentPlayer == 0)
-							currentPlayer = 4;
-						else if (currentPlayer == 1)
-							currentPlayer = 1;
-						else if (currentPlayer == 2)
-							currentPlayer = 2;
-						else
 							currentPlayer = 3;
+						else if (currentPlayer == 1)
+							currentPlayer = 0;
+						else if (currentPlayer == 2)
+							currentPlayer = 1;
+						else
+							currentPlayer = 2;
 				}
 			}
 			skip = 0;
+			//Check for cards remaining
+			total = 0;
+			for (int i = 0; i < 108; i++)
+				if (isCardStandard(currentPlayer, i))
+					total += 1;
+			if (total = 0) {
+				if (currentPlayer != 3) {
+					cout << "Player " << currentPlayer + 1 << " has no cards left. They win." << endl;
+					currentPlayer = 10;
+				}
+				else {
+					cout << "You ran out of cards. You win." << endl;
+					currentPlayer = 10;
+				}
+			}
 		}
 		//Ask for Repeat Gameplay
 		cout << "Would you like to play again?\n1 - Yes\n2 - No" << endl;

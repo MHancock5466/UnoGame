@@ -48,21 +48,9 @@ void currentCard() {
 }
 
 void drawCards(int player, string lastCard) {
-	int cardsToDraw;
-	int actualPlayer = 0;
-	if (reversed == 1) {
-		if (player < 3)
-			actualPlayer = player + 1;
-		else
-			actualPlayer = 0;
-	}
-	else {
-		if (player > 0)
-			actualPlayer = player - 1;
-		else
-			actualPlayer = 3;
-	}
-
+	int cardsToDraw = 0;
+	int cardsDrawnThisRound = 0;
+	//Determine amount of cards to draw
 	if (lastCard == "+4") {
 		cardsToDraw = 4;
 	}
@@ -72,14 +60,15 @@ void drawCards(int player, string lastCard) {
 	else {
 		cardsToDraw = 1;
 	}
-	do {
+	while (cardsToDraw > cardsDrawnThisRound) {
 		do {
-			playerCardArrayValue[actualPlayer][7 + cardsDrawn[actualPlayer]] = drawCard();
-		} while (playedDeckCards[playerCardArrayValue[actualPlayer][7 + cardsDrawn[actualPlayer]]] == 1);
-		playedDeckCards[playerCardArrayValue[actualPlayer][7 + cardsDrawn[actualPlayer]]] = 1;
-		playerCardNumber[actualPlayer][7 + cardsDrawn[actualPlayer]] = card[0][playerCardArrayValue[actualPlayer][7 + cardsDrawn[actualPlayer]]];
-		cardsDrawn[actualPlayer]++;
-	} while (cardsToDraw > cardsDrawn[actualPlayer]);
+			playerCardArrayValue[player][8 + cardsDrawn[player]] = drawCard();
+		} while (playedDeckCards[playerCardArrayValue[player][8 + cardsDrawn[player]]] == 1);
+		playedDeckCards[playerCardArrayValue[player][8 + cardsDrawn[player]]] = 1;
+		playerCardNumber[player][8 + cardsDrawn[player]] = card[0][playerCardArrayValue[player][8 + cardsDrawn[player]]];
+		cardsDrawnThisRound += 1;
+	}
+	cardsDrawn[player] += cardsDrawnThisRound;
 }
 
 void reverseGame() {
@@ -98,15 +87,16 @@ bool cardIsPlayable(int player, int arrayValue) {
 
 void isCardSpecial(string cardString, int player) {
 	int playerAffected = 0;
+	//Set player that is affected by the draw card or skip card
 	if (reversed == 1) {
 		if (player < 3)
-			playerAffected += player;
+			playerAffected = player + 1;
 		else
 			playerAffected = 0;
 	}
 	else {
-		if (player < 3)
-			playerAffected -= player;
+		if (player > 0)
+			playerAffected = player - 1;
 		else
 			playerAffected = 3;
 	}
@@ -134,14 +124,22 @@ void isCardSpecial(string cardString, int player) {
 			else
 				lastPlayedCardColor = "b";
 		}
-		if(lastPlayedCardString == "+4")
-			drawCards(playerAffected, lastPlayedCardString);
+		
 	}
+	if(lastPlayedCardString == "+4" || lastPlayedCardString == "+2")
+		drawCards(playerAffected, lastPlayedCardString);
 	else if (lastPlayedCardString == "R")
 		reverseGame();
 	else if (lastPlayedCardString == "S") {
 		skip = 1;
 	}
+}
+
+bool isCardStandard(int player, int i) {
+	if (playerCardNumber[player][i] == "0" || playerCardNumber[player][i] == "1" || playerCardNumber[player][i] == "2" || playerCardNumber[player][i] == "3" || playerCardNumber[player][i] == "4" || playerCardNumber[player][i] == "5" || playerCardNumber[player][i] == "6" || playerCardNumber[player][i] == "7" || playerCardNumber[player][i] == "8" || playerCardNumber[player][i] == "9" || playerCardNumber[player][i] == "S" || playerCardNumber[player][i] == "R" || playerCardNumber[player][i] == "+2" || playerCardNumber[player][i] == "+4" || playerCardNumber[player][i] == "W")
+		return true;
+	else
+		return false;
 }
 
 void computerGuess(int player) {
@@ -152,19 +150,19 @@ void computerGuess(int player) {
 			if (playerCardNumber[player][i] != "-") {
 				lastPlayedCardString = playerCardNumber[player][i];
 				lastPlayedCardColor = card[1][playerCardArrayValue[player][i]];
+				isCardSpecial(lastPlayedCardString, player);
 				playerCardNumber[player][i] = "-";
 				setColor("w");
 				cout << "Player " << player + 1 << " played ";
 				setColor(lastPlayedCardColor);
 				cout << lastPlayedCardString << endl;
-				isCardSpecial(lastPlayedCardString, player);
-				i = 110;
+				i = 108;
 			}
 		}
-		else if (i == 107) {
+		else if (i == 104) {
 			setColor("w");
 			cout << "Player " << player + 1 << " drew a card." << endl;
-			drawCards(player - 1, "+1");
+			drawCards(player, "+1");
 		}
 	}
 }
@@ -175,7 +173,8 @@ int chooseACard(int player) {
 	cin >> cardDrawn;
 	do {
 		if (cardDrawn == 0) {
-			drawCards(player - 1, lastPlayedCardString);
+			drawCards(player, "+1");
+			cout << "Player 4 drew a card." << endl;
 			return 0;
 		}
 		else if (playerCardNumber[3][cardDrawn - 1] == "-") {
