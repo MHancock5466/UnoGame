@@ -51,22 +51,19 @@ void drawCards(int player, string lastCard) {
 	int cardsToDraw = 0;
 	int cardsDrawnThisRound = 0;
 	//Determine amount of cards to draw
-	if (lastCard == "+4") {
+	if (lastCard == "+4")
 		cardsToDraw = 4;
-	}
-	else if (lastCard == "+2") {
+	else if (lastCard == "+2")
 		cardsToDraw = 2;
-	}
-	else {
+	else if (lastCard == "+1")
 		cardsToDraw = 1;
-	}
 	while (cardsToDraw > cardsDrawnThisRound) {
 		do {
 			playerCardArrayValue[player][8 + cardsDrawn[player]] = drawCard();
 		} while (playedDeckCards[playerCardArrayValue[player][8 + cardsDrawn[player]]] == 1);
 		playedDeckCards[playerCardArrayValue[player][8 + cardsDrawn[player]]] = 1;
 		playerCardNumber[player][8 + cardsDrawn[player]] = card[0][playerCardArrayValue[player][8 + cardsDrawn[player]]];
-		cardsDrawnThisRound += 1;
+		cardsDrawnThisRound = cardsDrawnThisRound + 1;
 	}
 	cardsDrawn[player] += cardsDrawnThisRound;
 }
@@ -147,7 +144,7 @@ void computerGuess(int player) {
 	for (int i = 0; i < 108; i++) {
 		if (cardIsPlayable(player, i)) {
 			//Check if card is already played
-			if (playerCardNumber[player][i] != "-") {
+			if (isCardStandard(player, i)) {
 				lastPlayedCardString = playerCardNumber[player][i];
 				lastPlayedCardColor = card[1][playerCardArrayValue[player][i]];
 				isCardSpecial(lastPlayedCardString, player);
@@ -159,7 +156,7 @@ void computerGuess(int player) {
 				i = 108;
 			}
 		}
-		else if (i == 104) {
+		else if (i == 107) {
 			setColor("w");
 			cout << "Player " << player + 1 << " drew a card." << endl;
 			drawCards(player, "+1");
@@ -194,4 +191,17 @@ int chooseACard(int player) {
 			cin >> cardDrawn;
 		}
 	} while (playerCardNumber[3][cardDrawn - 1] != lastPlayedCardString || card[1][playerCardArrayValue[3][cardDrawn - 1]] != card[1][playerCardArrayValue[3][cardDrawn]]);
+}
+
+int didPlayerWin(int player) {
+	int total = 0;
+	for (int i = 0; i < 108; i++)
+		if (isCardStandard(player, i))
+			total += 1;
+	if (total == 0) {
+		cout << "Player " << player + 1 << " has " << total << " cards left. Player " << player + 1 << " has won." << endl;
+		return 10;
+	}
+	else
+		return player;
 }

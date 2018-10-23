@@ -23,7 +23,7 @@ void displayHand(int player) {
 	cout << "\nYour Hand: " << endl;
 	//Loop for all cards in player hands
 	for (int i = 0; i < 108; i++) {
-		if (playerCardNumber[player][i] != "-") {
+		if (isCardStandard(player, i)) {
 			setColor(card[1][playerCardArrayValue[player][i]]);
 			cout << playerCardNumber[player][i] << " ";
 		}
