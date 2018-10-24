@@ -48,24 +48,12 @@ void currentCard() {
 }
 
 void drawCards(int player, string lastCard) {
-	int cardsToDraw = 0;
-	int cardsDrawnRound = 0;
-	//Determine amount of cards to draw
-	if (lastCard == "+4")
-		cardsToDraw = 4;
-	else if (lastCard == "+2")
-		cardsToDraw = 2;
-	else if (lastCard == "+1")
-		cardsToDraw = 1;
-	for (int cardsDrawnThisRound = 0; cardsToDraw > cardsDrawnThisRound; cardsDrawnThisRound++) {
 		do {
 			playerCardArrayValue[player][7 + cardsDrawn[player]] = drawCard();
 		} while (playedDeckCards[playerCardArrayValue[player][7 + cardsDrawn[player]]] == 1);
 		playedDeckCards[playerCardArrayValue[player][7 + cardsDrawn[player]]] = 1;
 		playerCardNumber[player][7 + cardsDrawn[player]] = card[0][playerCardArrayValue[player][7 + cardsDrawn[player]]];
-		cardsDrawnRound = cardsDrawnThisRound;
-	}
-	cardsDrawn[player] += cardsDrawnRound;
+	cardsDrawn[player] += 1;
 }
 
 void reverseGame() {
