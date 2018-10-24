@@ -69,13 +69,13 @@ int main() {
 				}
 				else if (reversed = -1) {
 					if (currentPlayer == 0)
-						currentPlayer = 4;
+						currentPlayer = 3;
 					else if (currentPlayer == 1)
-						currentPlayer = 0;
+						currentPlayer = 2;
 					else if (currentPlayer == 2)
 						currentPlayer = 1;
 					else
-						currentPlayer = 2;
+						currentPlayer = 4;
 				}
 			}
 			skip = 0;

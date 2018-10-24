@@ -49,7 +49,7 @@ void currentCard() {
 
 void drawCards(int player, string lastCard) {
 	int cardsToDraw = 0;
-	int cardsDrawnThisRound = 0;
+	int cardsDrawnRound = 0;
 	//Determine amount of cards to draw
 	if (lastCard == "+4")
 		cardsToDraw = 4;
@@ -57,15 +57,15 @@ void drawCards(int player, string lastCard) {
 		cardsToDraw = 2;
 	else if (lastCard == "+1")
 		cardsToDraw = 1;
-	while (cardsToDraw > cardsDrawnThisRound) {
+	for (int cardsDrawnThisRound = 0; cardsToDraw > cardsDrawnThisRound; cardsDrawnThisRound++) {
 		do {
-			playerCardArrayValue[player][8 + cardsDrawn[player]] = drawCard();
-		} while (playedDeckCards[playerCardArrayValue[player][8 + cardsDrawn[player]]] == 1);
-		playedDeckCards[playerCardArrayValue[player][8 + cardsDrawn[player]]] = 1;
-		playerCardNumber[player][8 + cardsDrawn[player]] = card[0][playerCardArrayValue[player][8 + cardsDrawn[player]]];
-		cardsDrawnThisRound = cardsDrawnThisRound + 1;
+			playerCardArrayValue[player][7 + cardsDrawn[player]] = drawCard();
+		} while (playedDeckCards[playerCardArrayValue[player][7 + cardsDrawn[player]]] == 1);
+		playedDeckCards[playerCardArrayValue[player][7 + cardsDrawn[player]]] = 1;
+		playerCardNumber[player][7 + cardsDrawn[player]] = card[0][playerCardArrayValue[player][7 + cardsDrawn[player]]];
+		cardsDrawnRound = cardsDrawnThisRound;
 	}
-	cardsDrawn[player] += cardsDrawnThisRound;
+	cardsDrawn[player] += cardsDrawnRound;
 }
 
 void reverseGame() {
@@ -123,8 +123,19 @@ void isCardSpecial(string cardString, int player) {
 		}
 		
 	}
-	if(lastPlayedCardString == "+4" || lastPlayedCardString == "+2")
-		drawCards(playerAffected, lastPlayedCardString);
+	if (lastPlayedCardString == "+4" || lastPlayedCardString == "+2") {
+		if (lastPlayedCardString == "+2") {
+			drawCards(playerAffected, cardString);
+			drawCards(playerAffected, cardString);
+		}
+		else {
+			drawCards(playerAffected, cardString);
+			drawCards(playerAffected, cardString);
+			drawCards(playerAffected, cardString);
+			drawCards(playerAffected, cardString);
+		}
+	}
+		
 	else if (lastPlayedCardString == "R")
 		reverseGame();
 	else if (lastPlayedCardString == "S") {
