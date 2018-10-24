@@ -14,7 +14,6 @@ string playerCardNumber[4][108];
 
 int main() {
 	int replay = 0;
-	int total;
 	skip = 0;
 	reversed = 1;
 
@@ -71,9 +70,9 @@ int main() {
 					if (currentPlayer == 0)
 						currentPlayer = 4;
 					else if (currentPlayer == 1)
-						currentPlayer = 0;
+						currentPlayer-=1;
 					else if (currentPlayer == 2)
-						currentPlayer = 1;
+						currentPlayer-=1;
 					else
 						currentPlayer = 2;
 				}
