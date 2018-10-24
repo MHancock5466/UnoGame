@@ -16,7 +16,7 @@
 - The game begins with a randomly selected first player. The user is automatically assigned the player 4 slot. Turns will be taken in chronological order, until a reverse is played. The user MUST choose the slot number of their card (NOT the card number/color) for the code to continue. Failure to do so may result in unexpected card choices. Any wild or +4 card played by the computer will randomly generate a color to use. If the user plays either of these cards, they must manually choose one of the colors by entering a number between 1 and 4. By selecting 0 as a card choice, you will draw a card. This can be done as a strategy, or if one does not have any playable cards in hand. Once one player reaches zero cards, that player wins. Good luck!
 
 ## Flowchart
-<img src="Uno.jpg" height="400" width="400>
+<img src="Uno .jpg" height="400" width="400>
 
 ## Youtube
 <a href ="https://www.youtube.com/watch?v=NFCbYbj8N3M&feature=youtu.be">My video is here</a>
