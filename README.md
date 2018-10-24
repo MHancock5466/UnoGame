@@ -2,7 +2,7 @@
 
 ## Tabel of Contents
 
-- [Rules]"Rules"
+- [Rules]Rules
 - Gameplay
 - Draw.io Flowchart
 
