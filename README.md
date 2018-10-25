@@ -19,4 +19,4 @@
 <img src="Uno.jpg" height = "700" width ="700">
 
 ## Youtube
-<a href ="https://www.youtube.com/watch?v=NFCbYbj8N3M&feature=youtu.be">Take a glimpse of our code in action, here.</a>
+<a href ="https://www.youtube.com/watch?v=NFCbYbj8N3M&feature=youtu.be">Take a glimpse of our code in action by clicking here.</a>
