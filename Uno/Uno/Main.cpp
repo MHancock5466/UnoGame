@@ -21,6 +21,15 @@ int main() {
 		//Set All Cards as Playable
 		for (int i = 0; i < 108; i++)
 			playedDeckCards[i] = 0;
+		//Set Hands as Neutral
+		for (int player = 0; player < 4; player++)
+			for (int card = 0; card < 108; card++) {
+				playerCardNumber[player][card] = -1;
+				playerCardArrayValue[player][card] = 0;
+			}
+		//Set standard gameplay rotation
+		reversed = 1;
+		skip = 0;
 
 		//Randomize first player, choose a first card, and distribute the rest
 		int firstPlayerInt = firstPlayer();
